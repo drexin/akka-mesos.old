@@ -22,7 +22,7 @@ object AkkaMesosBuild extends Build {
 //////////////////////////////////////////////////////////////////////////////
 
   val MESOS_VERSION           = "0.17.0"
-  val AKKA_VERSION            = "2.2.3"
+  val AKKA_VERSION            = "2.3.1"
   val TYPESAFE_CONFIG_VERSION = "1.0.2"
   val SCALATEST_VERSION       = "2.0.M5b"
   val SLF4J_VERSION           = "1.7.2"
@@ -63,8 +63,11 @@ object AkkaMesosBuild extends Build {
     base = file("cluster"),
     settings = commonSettings ++ Seq (
       libraryDependencies ++= Seq(
-        "com.typesafe.akka" %% "akka-cluster" % AKKA_VERSION % "provided"
-      )
+        "com.typesafe.akka" %% "akka-cluster" % AKKA_VERSION % "compile",
+        "com.typesafe.akka" %% "akka-contrib" % AKKA_VERSION % "compile"
+      ),
+      fork in run := true,
+      cancelable in run := true
     )
   ) dependsOn(core)
 
@@ -90,7 +93,7 @@ object AkkaMesosBuild extends Build {
       "com.typesafe"       % "config"          % TYPESAFE_CONFIG_VERSION,
       "org.slf4j"          % "slf4j-api"       % SLF4J_VERSION,
       "org.apache.mesos"   % "mesos"           % MESOS_VERSION,
-      "com.typesafe.akka" %% "akka-actor"      % AKKA_VERSION      % "provided",
+      "com.typesafe.akka" %% "akka-actor"      % AKKA_VERSION      % "compile",
       "com.typesafe.akka" %% "akka-testkit"    % AKKA_VERSION      % "test",
       "ch.qos.logback"     % "logback-classic" % LOGBACK_VERSION   % "runtime",
       "org.scalatest"     %% "scalatest"       % SCALATEST_VERSION % "test"

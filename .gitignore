@@ -3,3 +3,7 @@
 Vagrantfile
 project/*/
 */project/
+.idea
+*.iml
+.DS_Store
+*/target
